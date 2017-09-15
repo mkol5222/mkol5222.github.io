@@ -64,7 +64,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
           a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
         }
         console.log('> ' + a.join(' '));
-        var decoder = new TextDecoder(utf-8);
+        var decoder = new TextDecoder("utf-8");
         var decodedString = decoder.decode(value);
         console.log(decodedString);
       }
