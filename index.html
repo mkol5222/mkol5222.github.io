@@ -33,7 +33,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
             console.log("characteristic ", characteristic); 
             var enc = new TextEncoder("utf-8");
             console.log(enc.encode("This is a string converted to a Uint8Array"));
-            return characteristic.write(enc.encode("MM\r"));
+            return characteristic.writeValue(enc.encode("MM\r"));
           })
           .catch(error => { console.log(error); });
 
