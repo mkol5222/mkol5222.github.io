@@ -21,7 +21,18 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
           // Attempts to connect to remote GATT Server.
           return device.gatt.connect();
           })
-          .then(server => { console.log(server); })
+          .then(server => { console.log("server ", server); 
+            return server.getPrimaryService("C1B25000-CAAF-6D0E-4C33-7DAE30052840");})
+          .then(service => {
+            console.log("service ", service); 
+            // Getting Battery Level Characteristic...
+            return service.getCharacteristic('RX_CMD_TO_INSTRUMENT_UUID');
+          })
+          .then(characteristic => {
+            // Reading Battery Level...
+            console.log("characteristic ", characteristic); 
+            return characteristic.readValue();
+          })
           .catch(error => { console.log(error); });
 
       }
