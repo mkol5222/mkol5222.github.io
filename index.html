@@ -3,7 +3,14 @@ test
 
 <html>
   <body>
+    <p id="demo"></p>
+
+<script>
+document.getElementById("demo").innerHTML = "Hello JavaScript!";
+</script> 
+    
     <script>
+      console.log("testik");
       navigator.bluetooth.requestDevice({acceptAllDevices: true}).then(function (device) { console.log(device); console.log(device.name); device.gatt.connect(); console.log(device.gatt); })
     </script>
   </body>
