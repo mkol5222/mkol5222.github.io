@@ -1,1 +1,10 @@
 test
+
+
+<html>
+  <body>
+    <script>
+      navigator.bluetooth.requestDevice({acceptAllDevices: true}).then(function (device) { console.log(device); console.log(device.name); device.gatt.connect(); console.log(device.gatt); })
+    </script>
+  </body>
+ </html>
