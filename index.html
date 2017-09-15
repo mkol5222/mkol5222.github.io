@@ -43,7 +43,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
             setInterval(function(){ console.log("tick"); 
             console.log("char", characteristic);
             //characteristic.writeValue(enc.encode("?\r")); 
-            characteristic.writeValue(enc.encode("BAT?\r")); 
+            characteristic.writeValue(enc.encode("?\r")); 
             }
             , 3000);
 
@@ -55,7 +55,15 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
       function handleNotif(event) {
         console.log("notified");
         console.log(event);
-
+        let value = event.target.value;
+        let a = [];
+        // Convert raw data bytes to hex values just for the sake of showing something.
+        // In the "real" world, you'd use data.getUint8, data.getUint16 or even
+        // TextDecoder to process raw data bytes.
+        for (let i = 0; i < value.byteLength; i++) {
+          a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+        }
+        log('> ' + a.join(' '));
       }
     </script>
   </body>
