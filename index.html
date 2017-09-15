@@ -38,7 +38,12 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
             var enc = new TextEncoder("utf-8");
             console.log(enc.encode("This is a string converted to a Uint8Array"));
 
-            setTimeout(function(){ console.log("tick"); characteristic.writeValue(enc.encode("?\r")); }, 3000);
+            setTimeout(function(){ console.log("tick"); 
+            console.log("char", characteristic);
+            characteristic.writeValue(enc.encode("?\r")); 
+            characteristic.writeValue(enc.encode("BAT?\r")); 
+            }
+            , 3000);
 
             return characteristic.writeValue(enc.encode("?\r"));
           })
