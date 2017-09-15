@@ -28,6 +28,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
 
             service.getCharacteristic("c1b25013-caaf-6d0e-4c33-7dae30052840")
               .then(ch =>{ console.log("notif char", ch); 
+                    ch.startNotifications();
                     ch.addEventListener('characteristicvaluechanged',
                                   handleNotif); });
             // Getting Battery Level Characteristic...
