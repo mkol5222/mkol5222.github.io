@@ -13,7 +13,17 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
     <script>
       function connectBT() {
         console.log("testik");
-        navigator.bluetooth.requestDevice({acceptAllDevices: true});
+        navigator.bluetooth.requestDevice({acceptAllDevices: true})
+          .then(device => {
+          // Human-readable name of the device.
+          console.log(device.name);
+
+          // Attempts to connect to remote GATT Server.
+          return device.gatt.connect();
+          })
+          .then(server => { console.log(server); })
+          .catch(error => { console.log(error); });
+
       }
     </script>
   </body>
