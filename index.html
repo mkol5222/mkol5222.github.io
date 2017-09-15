@@ -13,7 +13,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
     <script>
       function connectBT() {
         console.log("testik");
-        navigator.bluetooth.requestDevice({acceptAllDevices: true})
+        navigator.bluetooth.requestDevice({acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']})
           .then(device => {
           // Human-readable name of the device.
           console.log(device.name);
