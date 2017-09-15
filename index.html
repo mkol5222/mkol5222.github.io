@@ -29,9 +29,11 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
             return service.getCharacteristic("c1b25012-caaf-6d0e-4c33-7dae30052840");
           })
           .then(characteristic => {
-            // Reading Battery Level...
+       
             console.log("characteristic ", characteristic); 
-            return characteristic.readValue();
+            var enc = new TextEncoder("utf-8");
+            console.log(enc.encode("This is a string converted to a Uint8Array"));
+            return characteristic.write(enc.encode("MM\r"));
           })
           .catch(error => { console.log(error); });
 
