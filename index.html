@@ -3,15 +3,18 @@
   <body>
     test me
     <p id="demo"></p>
-
+<button onclick="connectBT()">Click me</button>
+    
 <script>
   console.log("ttt");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
     <script>
-      console.log("testik");
-      navigator.bluetooth.requestDevice({acceptAllDevices: true});
+      function connectBT() {
+        console.log("testik");
+        navigator.bluetooth.requestDevice({acceptAllDevices: true});
+      }
     </script>
   </body>
  </html>
