@@ -2,7 +2,9 @@
 <html>
   <body>
     test me 123
+    <h1>
     <p id="demo"></p>
+    </h1>
 <button onclick="connectBT()">Click me</button>
     
 <script>
@@ -67,6 +69,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         var decoder = new TextDecoder("utf-8");
         var decodedString = decoder.decode(value);
         console.log(decodedString);
+        document.getElementById("demo").innerHTML = decodedString;
       }
     </script>
   </body>
