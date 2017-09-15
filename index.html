@@ -27,7 +27,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
             console.log("service ", service); 
 
             service.getCharacteristic("c1b25013-caaf-6d0e-4c33-7dae30052840")
-              then(ch =>{ console.log(ch); ch.addEventListener('characteristicvaluechanged',
+              .then(ch =>{ console.log(ch); ch.addEventListener('characteristicvaluechanged',
                                   handleNotif); });
             // Getting Battery Level Characteristic...
             return service.getCharacteristic("c1b25012-caaf-6d0e-4c33-7dae30052840");
