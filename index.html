@@ -6,6 +6,8 @@
     <p id="demo"></p>
     </h2>
 <button onclick="connectBT()">Click me</button>
+<p>
+<button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
     
 <script>
   console.log("ttt");
@@ -13,6 +15,30 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
     <script>
+          async function onBatteryButtonClick() {
+            try {
+              log('Requesting Bluetooth Device...');
+              const device = await navigator.bluetooth.requestDevice({
+                  filters: [{services: ['battery_service']}]});
+
+              log('Connecting to GATT Server...');
+              const server = await device.gatt.connect();
+
+              log('Getting Battery Service...');
+              const service = await server.getPrimaryService('battery_service');
+
+              log('Getting Battery Level Characteristic...');
+              const characteristic = await service.getCharacteristic('battery_level');
+
+              log('Reading Battery Level...');
+              const value = await characteristic.readValue();
+
+              log('> Battery Level is ' + value.getUint8(0) + '%');
+            } catch(error) {
+              log('Argh! ' + error);
+            }
+          }
+
       function connectBT() {
         console.log("testik");
         navigator.bluetooth.requestDevice({acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']})
