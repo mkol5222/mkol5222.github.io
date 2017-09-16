@@ -13,7 +13,7 @@
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
 <p> 
   <hr>
-  <p id="log"></p>
+  <pre id="log">log</pre>
 
 
 <script>
@@ -24,7 +24,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
     <script>
           //log = console.log;
           function log(a) {
-            document.getElementById("emptyID").innerHTML += a;
+            document.getElementById("log").innerHTML += "\n"+a;
           }
           async function onBatteryButtonClick() {
             try {
