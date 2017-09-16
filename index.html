@@ -12,15 +12,20 @@
 <p>
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
 <p> 
+  <hr>
+  <p id="log"></p>
 
 
 <script>
-  console.log("ttt6g");
+  console.log("ttt6h");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
     <script>
-          log = console.log;
+          //log = console.log;
+          function log(a) {
+            document.getElementById("emptyID").innerHTML += a;
+          }
           async function onBatteryButtonClick() {
             try {
               log('Requesting Bluetooth Device...');
@@ -66,7 +71,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
 
               const indic_characteristics = await service.getCharacteristic("c1b25010-caaf-6d0e-4c33-7dae30052840");
               log("indic_characteristics", indic_characteristics); 
-              await indic_characteristics.startNotifications;
+              await indic_characteristics.startNotifications();
               log("indic_characteristics notification started")
               notif_characteristics.addEventListener('characteristicvaluechanged', handlInd);
 
