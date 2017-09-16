@@ -5,6 +5,9 @@
     <h2>
     <p id="demo"></p>
     </h2>
+    <h2>
+      <p id="demo2"></p>
+      </h2>
 <button onclick="connectBTNew()">Click me</button>
 <p>
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
@@ -12,7 +15,7 @@
 
 
 <script>
-  console.log("ttt6e");
+  console.log("ttt6f");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -60,7 +63,14 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
               await notif_characteristics.startNotifications();
               log("notifications started")
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif);
-              
+
+              const indic_characteristics = await service.getCharacteristic("C1B25010-CAAF-6D0E-4C33-7DAE30052840")
+              log("indic_characteristics", indic_characteristics); 
+              await indic_characteristics.startNotifications;
+              log("indic_characteristics notification started")
+              notif_characteristics.addEventListener('characteristicvaluechanged', handlInd);
+
+
               const characteristic = await service.getCharacteristic("c1b25012-caaf-6d0e-4c33-7dae30052840");
               var enc = new TextEncoder("utf-8");
               characteristic.writeValue(enc.encode("?\r"));
@@ -132,6 +142,24 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         var decodedString = decoder.decode(value);
         console.log(decodedString);
         document.getElementById("demo").innerHTML = decodedString;
+      }
+
+      function handleInd(event) {
+        console.log("handleInd");
+        console.log(event);
+        let value = event.target.value;
+        let a = [];
+        // Convert raw data bytes to hex values just for the sake of showing something.
+        // In the "real" world, you'd use data.getUint8, data.getUint16 or even
+        // TextDecoder to process raw data bytes.
+        for (let i = 0; i < value.byteLength; i++) {
+          a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
+        }
+        console.log('> ' + a.join(' '));
+        var decoder = new TextDecoder("utf-8");
+        var decodedString = decoder.decode(value);
+        console.log(decodedString);
+        document.getElementById("demo2").innerHTML = decodedString;
       }
     </script>
   </body>
