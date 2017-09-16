@@ -13,7 +13,7 @@
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
 <p> 
   <hr>
-  <pre id="log">6j</pre>
+  <pre id="log">6k</pre>
 
 
 <script>
@@ -150,8 +150,8 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
       }
 
       function handleInd(event) {
-        console.log("handleInd");
-        console.log(event);
+        log("handleInd");
+        log(JSON.stringify(event));
         let value = event.target.value;
         let a = [];
         // Convert raw data bytes to hex values just for the sake of showing something.
@@ -161,9 +161,10 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
           a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
         }
         console.log('> ' + a.join(' '));
+
         var decoder = new TextDecoder("utf-8");
         var decodedString = decoder.decode(value);
-        console.log(decodedString);
+        log(decodedString);
         document.getElementById("demo2").innerHTML = decodedString;
       }
     </script>
