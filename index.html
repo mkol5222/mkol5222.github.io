@@ -8,9 +8,11 @@
 <button onclick="connectBT()">Click me</button>
 <p>
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
-    
+<p> 
+
+
 <script>
-  console.log("ttt6a");
+  console.log("ttt6b");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -64,10 +66,10 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
               characteristic.writeValue(enc.encode("?\r"));
               window.btch = characteristic;
 
-              setInterval(function(){ 
-                console.log("tick"); 
-                characteristic.writeValue(enc.encode("?\r")); 
-              }, 1000);
+              // setInterval(function(){ 
+              //   console.log("tick"); 
+              //   characteristic.writeValue(enc.encode("?\r")); 
+              // }, 1000);
 
             } catch(error) {
               log('Argh! ' + error);
