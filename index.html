@@ -13,11 +13,11 @@
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
 <p> 
   <hr>
-  <pre id="log">6i</pre>
+  <pre id="log">6j</pre>
 
 
 <script>
-  console.log("ttt6i");
+
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -81,10 +81,10 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
               characteristic.writeValue(enc.encode("?\r"));
               window.btch = characteristic;
 
-              setInterval(function(){ 
-                console.log("tick"); 
-                characteristic.writeValue(enc.encode("?\r")); 
-              }, 1000);
+              // setInterval(function(){ 
+              //   console.log("tick"); 
+              //   characteristic.writeValue(enc.encode("?\r")); 
+              // }, 1000);
 
             } catch(error) {
               log('Argh! ' + error);
