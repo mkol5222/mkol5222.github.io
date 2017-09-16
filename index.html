@@ -12,7 +12,7 @@
 
 
 <script>
-  console.log("ttt6d");
+  console.log("ttt6e");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -66,10 +66,10 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
               characteristic.writeValue(enc.encode("?\r"));
               window.btch = characteristic;
 
-              // setInterval(function(){ 
-              //   console.log("tick"); 
-              //   characteristic.writeValue(enc.encode("?\r")); 
-              // }, 1000);
+              setInterval(function(){ 
+                console.log("tick"); 
+                characteristic.writeValue(enc.encode("?\r")); 
+              }, 1000);
 
             } catch(error) {
               log('Argh! ' + error);
