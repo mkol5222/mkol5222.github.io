@@ -10,7 +10,7 @@
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
     
 <script>
-  console.log("ttt6");
+  console.log("ttt6a");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -62,6 +62,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
               const characteristic = await service.getCharacteristic("c1b25012-caaf-6d0e-4c33-7dae30052840");
               var enc = new TextEncoder("utf-8");
               characteristic.writeValue(enc.encode("?\r"));
+              window.btch = characteristic;
 
               setInterval(function(){ 
                 console.log("tick"); 
