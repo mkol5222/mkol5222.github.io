@@ -15,7 +15,7 @@
 
 
 <script>
-  console.log("ttt6f");
+  console.log("ttt6g");
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -64,7 +64,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
               log("notifications started")
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif);
 
-              const indic_characteristics = await service.getCharacteristic("C1B25010-CAAF-6D0E-4C33-7DAE30052840")
+              const indic_characteristics = await service.getCharacteristic("c1b25010-caaf-6d0e-4c33-7dae30052840");
               log("indic_characteristics", indic_characteristics); 
               await indic_characteristics.startNotifications;
               log("indic_characteristics notification started")
