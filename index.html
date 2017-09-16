@@ -40,7 +40,25 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
             }
           }
 
-      function connectBT() {
+          async function connectBT() {
+            try {
+              log("requesting caliper device");
+              const device = await navigator.bluetooth.requestDevice({
+                  services: ['c1b25000-caaf-6d0e-4c33-7dae30052840'],  
+                  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']
+              });
+              log("got device " + device.name);
+              log('Connecting to GATT Server...');
+              const server = await device.gatt.connect();
+
+              log('Getting caliper Service...');
+              const service = await server.getPrimaryService('c1b25000-caaf-6d0e-4c33-7dae30052840');
+
+            } catch(error) {
+              log('Argh! ' + error);
+            }
+          }
+      function connectBT_old() {
         console.log("testik");
         navigator.bluetooth.requestDevice({acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']})
           .then(device => {
