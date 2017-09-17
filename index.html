@@ -25,7 +25,7 @@
   </table>
 
   <hr>
-  <pre id="log">6r</pre>
+  <pre id="log">6s</pre>
 
 
 <script>
@@ -176,8 +176,10 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         var decoder = new TextDecoder("utf-8");
         let value = event.target.value;
 
-        if (parseInt(value)>70) {
-          addNewRow(); return;
+        console.log("deciding on ", parseInt(value));
+        if (parseInt(value)>=70) {
+          addNewRow(); 
+          return;
         }
 
         var decodedString = decoder.decode(value);
