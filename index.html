@@ -25,7 +25,7 @@
   </table>
 
   <hr>
-  <pre id="log">6q</pre>
+  <pre id="log">6r</pre>
 
 
 <script>
@@ -171,9 +171,15 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
       function addNewData(datastr) {
         document.getElementById("datarow").innerHTML += "<td>"+datastr+"</td>";
       }
+
       function handleInd(event) {
         var decoder = new TextDecoder("utf-8");
         let value = event.target.value;
+
+        if (parseInt(value)>70) {
+          addNewRow(); return;
+        }
+
         var decodedString = decoder.decode(value);
         log(decodedString);
         document.getElementById("datarow").innerHTML += "<td>"+decodedString+"</td>";
