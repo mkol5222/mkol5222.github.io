@@ -25,7 +25,7 @@
   </table>
 
   <hr>
-  <pre id="log">6p</pre>
+  <pre id="log">6q</pre>
 
 
 <script>
@@ -161,8 +161,8 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         document.getElementById("demo").innerHTML = decodedString;
       }
       function addNewRow() {
-        document.getElementById('table')
-          .insertAdjacentHTML('afterbegin', '<tr id="newrow"></row>');
+        document.getElementById('datarow')
+          .insertAdjacentHTML('afterend', '<tr id="newrow"></row>');
         datarow = document.getElementById("datarow");
         newrow = document.getElementById("newrow");
         datarow.removeAttribute('id');
