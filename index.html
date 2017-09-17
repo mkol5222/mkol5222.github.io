@@ -13,8 +13,11 @@
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
 <p> 
   <hr>
-  <pre id="log">6l</pre>
+  <pre id="log">6m</pre>
 
+  <table>
+    <tr id="datarow"></tr>
+  </table>
 
 <script>
 
@@ -150,6 +153,15 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
       }
 
       function handleInd(event) {
+        var decoder = new TextDecoder("utf-8");
+        let value = event.target.value;
+        var decodedString = decoder.decode(value);
+        log(decodedString);
+        document.getElementById("datarow").innerHTML += "<td>"+decodedString+"</td>";
+  
+      }  
+
+      function handleInd_old(event) {
         log("handleInd");
         log(JSON.stringify(event));
         let value = event.target.value;
