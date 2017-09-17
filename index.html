@@ -36,7 +36,7 @@
   </table>
 
   <hr>
-  <pre id="log">6y</pre>
+  <pre id="log">6z</pre>
 
 
 <script>
@@ -187,9 +187,9 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         var decoder = new TextDecoder("utf-8");
         let value = event.target.value;
 
-        log("deciding on "+ JSON.stringify(parseInt(value)) );
-        log("deciding on "+ JSON.stringify(parseInt(value)>=70) );
-        if (parseInt(value)>=70) {
+        log("deciding on "+ JSON.stringify(parseInt(value.substring(1) )) );
+        log("deciding on "+ JSON.stringify(parseInt(value.substring(1) )>=70) );
+        if (parseInt(value.substring(1) )>=70) {
           addNewRow(); 
           return;
         }
