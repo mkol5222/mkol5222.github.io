@@ -9,6 +9,8 @@
       <p id="demo2"></p>
       </h2>
 <button onclick="connectBTNew()">Click me</button>
+<button onclick="addNewRow();">Add row</button>
+<button onclick="addNewData('somedata');">Add some data</button>
 <p>
 <button onclick="onBatteryButtonClick()">Click me for Battery Demo</button>
 <p> 
@@ -23,7 +25,7 @@
   </table>
 
   <hr>
-  <pre id="log">6n</pre>
+  <pre id="log">6o</pre>
 
 
 <script>
@@ -158,7 +160,17 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         console.log(decodedString);
         document.getElementById("demo").innerHTML = decodedString;
       }
-
+      function addNewRow() {
+        document.getElementById('table')
+          .insertAdjacentHTML('afterbegin', '<tr id="newrow"></row>');
+        datarow = document.getElementById("datarow");
+        newrow = document.getElementById("newrow");
+        datarow.removeAttribute('id');
+        newrow.setAttribute("id", "datarow");
+      }
+      function addNewData(datastr) {
+        document.getElementById("datarow").innerHTML += "<td>"+datastr+"</td>";
+      }
       function handleInd(event) {
         var decoder = new TextDecoder("utf-8");
         let value = event.target.value;
