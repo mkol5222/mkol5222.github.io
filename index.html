@@ -36,7 +36,7 @@
   </table>
 
   <hr>
-  <pre id="log">6z</pre>
+  <pre id="log">7a</pre>
 
 
 <script>
@@ -184,18 +184,21 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
       }
 
       function handleInd(event) {
-        var decoder = new TextDecoder("utf-8");
+        
         let value = event.target.value;
-
-        log("deciding on "+ JSON.stringify(parseInt(value.substring(1) )) );
-        log("deciding on "+ JSON.stringify(parseInt(value.substring(1) )>=70) );
-        if (parseInt(value.substring(1) )>=70) {
+        
+        var decoder = new TextDecoder("utf-8");
+        var decodedString = decoder.decode(value);
+        log(decodedString);
+        
+        log("deciding on "+ JSON.stringify(parseInt(decodedString.substring(1) )) );
+        log("deciding on "+ JSON.stringify(parseInt(decodedString.substring(1) )>=70) );
+        if (parseInt(decodedString.substring(1) )>=70) {
           addNewRow(); 
           return;
         }
 
-        var decodedString = decoder.decode(value);
-        log(decodedString);
+
         document.getElementById("datarow").innerHTML += "<td>"+decodedString+"</td>";
   
       }  
