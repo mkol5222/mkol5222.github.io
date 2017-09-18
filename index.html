@@ -20,7 +20,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 7j</pre>
+  <pre id="log">Ver: 7k</pre>
 
 </p>
 
@@ -103,7 +103,7 @@
               
 
               cellCount = Array.from(tr.cells).length;
-              console.log(window.maxcol, window.curcol, Array.from(tr.cells).length);
+              //console.log(window.maxcol, window.curcol, Array.from(tr.cells).length);
               for(i=0;i<(window.maxcol-cellCount);i++ ) {
                 tr.innerHTML += "<td></td>"
               } 
@@ -126,8 +126,8 @@
     
       }
     function beep2() {
-      var snd = new  Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'+Array(1e3).join(123)).play();  
-      snd.play();
+      new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'+Array(1e3).join(123)).play();  
+   
     }
 
       function beep() {
