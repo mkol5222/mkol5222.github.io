@@ -28,7 +28,6 @@
 <p> 
  
 
-var line = 1;
 
 
   <table class="table" id="table">
@@ -36,11 +35,12 @@ var line = 1;
   </table>
 
   <hr>
-  <pre id="log">7b</pre>
+  <pre id="log">7c</pre>
 
 
 <script>
 
+var window.line = 1;
 document.getElementById("demo").innerHTML = "Hello JavaScript!";
 </script> 
     
@@ -174,7 +174,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
       function addNewRow() {
         line += 1;
         document.getElementById('datarow')
-          .insertAdjacentHTML('afterend', '<tr id="newrow"><td>' + line + '</td></row>');
+          .insertAdjacentHTML('afterend', '<tr id="newrow"><td>' + window.line.toString() + '</td></row>');
         datarow = document.getElementById("datarow");
         newrow = document.getElementById("newrow");
         datarow.removeAttribute('id');
