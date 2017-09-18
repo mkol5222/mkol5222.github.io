@@ -35,7 +35,7 @@
   </table>
 
   <hr>
-  <pre id="log">7c</pre>
+  <pre id="log">7d</pre>
 
 
 <script>
@@ -172,7 +172,7 @@ document.getElementById("demo").innerHTML = "Hello JavaScript!";
         document.getElementById("demo").innerHTML = decodedString;
       }
       function addNewRow() {
-        line += 1;
+        window.line += 1;
         document.getElementById('datarow')
           .insertAdjacentHTML('afterend', '<tr id="newrow"><td>' + window.line.toString() + '</td></row>');
         datarow = document.getElementById("datarow");
