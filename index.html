@@ -10,22 +10,24 @@
     <h1>Sylvac S_Cal EVO caliper IP67</h1>
     <h2><p id="display"></p></h2>
 
-<button onclick="connectBTNew()">Click me</button>
+<button onclick="connectBTNew()">Connect BT</button>
 <button onclick="addNewRow();">Add row</button>
 <p>
  
 
-  <table class="table" id="table">
+  <table class="table table-striped table-bordered table-hover table-condensed" id="table">
     <tr id="datarow"><td>1</td></td></tr>
   </table>
 
   <hr>
-  <pre id="log">7e</pre>
+  <pre id="log">Ver: 7g</pre>
 
 </p>
 
 <script>
   window.line = 1;
+  window.maxcol = 1;
+  window.curcol = 1;
   document.getElementById("display").innerHTML = " 000.00";
 </script> 
     
@@ -92,9 +94,9 @@
               window.btch = characteristic;
 
               setInterval(function(){ 
-                console.log("tick"); 
+                //console.log("tick"); 
                 characteristic.writeValue(enc.encode("?\r")); 
-              }, 1000);
+              }, 300);
 
             } catch(error) {
               log('Error: ' + error);
@@ -106,19 +108,44 @@
         let value = event.target.value;
         var decoder = new TextDecoder("utf-8");
         var decodedString = decoder.decode(value);
-        console.log("Read value: " + decodedString);
+        //console.log("Read value: " + decodedString);
         document.getElementById("display").innerHTML = decodedString;
       }
 
+      function addMissingColumns()
+      {
+        Array.from(document.getElementById("table").getElementsByTagName("TR")).forEach(
+            function (tr) { 
+              //console.log(tr, window.maxcol-Array.from(tr.cells).length); 
+              
+
+              cellCount = Array.from(tr.cells).length;
+              console.log(window.maxcol, window.curcol, Array.from(tr.cells).length);
+              for(i=0;i<(window.maxcol-cellCount);i++ ) {
+                tr.innerHTML += "<td></td>"
+              } 
+            }
+        );
+      }
+
       function addNewData(datastr) {
+        if (window.curcol > 7) addNewRow();
+
         document.getElementById("datarow").innerHTML += "<td>"+datastr+"</td>";
+        window.curcol += 1;
+        if (window.curcol>window.maxcol) {
+          console.log("review column count. new maxcol ", window.curcol);
+          window.maxcol = window.curcol;
+          addMissingColumns();
+        }
+    
       }
 
       function handleInd(event) {
         let value = event.target.value;
         var decoder = new TextDecoder("utf-8");
         var decodedString = decoder.decode(value);
-        log("Button pressed for " + decodedString);
+        //log("Button pressed for " + decodedString);
         
         //log("deciding on "+ JSON.stringify(parseInt(decodedString.substring(1) )) );
         //log("deciding on "+ JSON.stringify(parseInt(decodedString.substring(1) )>=70) );
@@ -129,17 +156,21 @@
           return;
         }
 
-        document.getElementById("datarow").innerHTML += "<td>"+decodedString+"</td>";
+        addNewData(decodedString);
       }  
 
       function addNewRow() {
+        addMissingColumns(); 
+
         window.line += 1;
+        window.curcol = 1;
         document.getElementById('datarow')
           .insertAdjacentHTML('afterend', '<tr id="newrow"><td>' + window.line.toString() + '</td></row>');
         datarow = document.getElementById("datarow");
         newrow = document.getElementById("newrow");
         datarow.removeAttribute('id');
         newrow.setAttribute("id", "datarow");
+        newrow.scrollIntoView();
       }
 
     </script>
