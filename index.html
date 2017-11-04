@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 80</pre>
+  <pre id="log">Ver: 81</pre>
 
 </p>
 
@@ -50,7 +50,11 @@
               window.device2 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
               log("Got device 2" + window.device2.name);
               console.log(window.device2);
+            
+            } catch(error) {
+              log('Error: ' + error);
             }
+          }
 
             async function connectBTNew3() {
               try {
@@ -64,7 +68,11 @@
                 window.device3 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
                 log("Got device 3" + window.device3.name);
                 console.log(window.device3);
-              }
+              
+            } catch(error) {
+              log('Error: ' + error);
+            }
+            }
 
           async function connectBTNew() {
             try {
