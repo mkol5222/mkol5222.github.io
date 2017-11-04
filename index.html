@@ -10,8 +10,8 @@
     <h1>Sylvac S_Cal EVO caliper IP67</h1>
     <h2><p id="display"></p></h2>
 
-<button onclick="connectBTNew()">Connect BT</button>
-<button onclick="connectBTNew()">Connect BT2</button>
+<button onclick="connectBTNew3()">Connect BT</button>
+<button onclick="connectBTNew2()">Connect BT2</button>
 <button onclick="addNewRow();">Add row</button>
 <p>
  
@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 7l</pre>
+  <pre id="log">Ver: 80</pre>
 
 </p>
 
@@ -38,6 +38,33 @@
             document.getElementById("log").innerHTML += "\n"+a;
           }
         
+          async function connectBTNew2() {
+            try {
+              log("Requesting caliper device");
+
+              //const options = {filters: [{ services: ['c1b25000-caaf-6d0e-4c33-7dae30052840']}]}
+            
+              //const options = {filters: [{ name: 'SY295'}], optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']};
+              //const device = await navigator.bluetooth.requestDevice(options);
+              //const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']} );
+              window.device2 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
+              log("Got device 2" + window.device2.name);
+              console.log(window.device2);
+            }
+
+            async function connectBTNew3() {
+              try {
+                log("Requesting caliper device");
+  
+                //const options = {filters: [{ services: ['c1b25000-caaf-6d0e-4c33-7dae30052840']}]}
+              
+                //const options = {filters: [{ name: 'SY295'}], optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']};
+                //const device = await navigator.bluetooth.requestDevice(options);
+                //const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']} );
+                window.device3 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
+                log("Got device 3" + window.device3.name);
+                console.log(window.device3);
+              }
 
           async function connectBTNew() {
             try {
