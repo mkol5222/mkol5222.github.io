@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 99</pre>
+  <pre id="log">Ver: 101</pre>
 
 </p>
 
@@ -92,7 +92,10 @@
                     var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]);
                     console.log(dataBytes);
                     console.log(window.notif_characteristics);
-                    window.notif_characteristics.writeValue(dataBytes);
+                    window.notif_characteristics.writeValue(dataBytes).then(_ => {
+                        console.log('written.');
+                    })
+                    .catch(error => { console.log(error); });
                    
 
 
@@ -135,7 +138,10 @@
               log("writing")
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
               var dataBytes = new Uint8Array([0xe6, 0x01]);
-              notif_characteristics.writeValue(dataBytes);
+              notif_characteristics.writeValue(dataBytes).then(_ => {
+                        console.log('written.');
+                    })
+                    .catch(error => { console.log(error); });
               window.notif_characteristics = notif_characteristics;
 
             } catch(error) {
