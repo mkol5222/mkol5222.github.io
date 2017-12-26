@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 107</pre>
+  <pre id="log">Ver: 108</pre>
 
 </p>
 
@@ -157,6 +157,13 @@
             } catch(error) {
               log('Error: ' + error);
             }
+
+            var dataBytes = new Uint8Array([0xe7, 0x33]).buffer;
+              notif_characteristics.writeValue(dataBytes).then(_ => {
+                        console.log('written user info req.', buf2hex(dataBytes));
+                    })
+                    .catch(error => { console.log(error); });
+            ///E7-33
             }
 
           async function connectBTNew() {
