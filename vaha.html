@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 97</pre>
+  <pre id="log">Ver: 98</pre>
 
 </p>
 
@@ -90,6 +90,8 @@
                 if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
                     console.log("velke mereni. potvrzeno");
                     var dataBytes = Uint8Array.of([0xe7, 0xf1, data[1],data[2],data[3] ]);
+                    console.log(dataBytes);
+                    console.log(window.notif_characteristics);
                     window.notif_characteristics.writeValue(dataBytes);
                    
 
