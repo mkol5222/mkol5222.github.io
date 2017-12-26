@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 81</pre>
+  <pre id="log">Ver: 82</pre>
 
 </p>
 
@@ -77,7 +77,7 @@
                 //const options = {filters: [{ name: 'SY295'}], optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']};
                 //const device = await navigator.bluetooth.requestDevice(options);
                 //const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']} );
-                window.device3 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
+                window.device3 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0000FFE0-0000-1000-8000-00805F9B34FB'.toLowerCase()]} );
                 log("Got device 3" + window.device3.name);
                 console.log(window.device3);
 
