@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 88</pre>
+  <pre id="log">Ver: 89</pre>
 
 </p>
 
@@ -81,9 +81,7 @@
                     console.log("mereni:");
                     if ((data[2] & 0xFF) != 0x00) {
                         // little endian
-                        float weight = ( (
-                        ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)
-                        )) * 50.0f / 1000.0f; // unit is 50g
+                        weight = ( ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)) * 50.0 / 1000.0; // unit is 50g
                     }
                     console.log(weight);
                 }
