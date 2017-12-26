@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 83/pre>
+  <pre id="log">Ver: 84</pre>
 
 </p>
 
@@ -100,8 +100,11 @@
 
               await notif_characteristics.startNotifications();
               log("Notifications started")
-              notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
 
+              log("writing")
+              notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
+              var dataBytes = Uint8Array.of([0xe6, 0x01]);
+              notif_characteristics.writeValue(dataBytes);
               
             } catch(error) {
               log('Error: ' + error);
