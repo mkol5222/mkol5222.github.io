@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 85</pre>
+  <pre id="log">Ver: 86</pre>
 
 </p>
 
@@ -33,6 +33,13 @@
 </script> 
     
     <script>
+                function buf2hex(buffer) { // buffer is an ArrayBuffer
+            return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
+        }
+
+        // EXAMPLE:
+        const buffer = new Uint8Array([ 4, 8, 12, 16 ]).buffer;
+        console.log(buf2hex(buffer)); // = 04080c10
 
           // SANITAS SBF70
 
@@ -67,6 +74,8 @@
                 //console.log("Read value: " + decodedString);
                 document.getElementById("display").innerHTML = decodedString;
                 console.log(value);
+                const buffer = value.buffer;
+                console.log(buf2hex(buffer));
       }
 
             async function connectBTNew3() {
