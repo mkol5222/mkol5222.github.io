@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 96</pre>
+  <pre id="log">Ver: 97</pre>
 
 </p>
 
@@ -87,6 +87,14 @@
                     //}
                     console.log(weight);
                 }
+                if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
+                    console.log("velke mereni. potvrzeno");
+                    var dataBytes = Uint8Array.of([0xe7, 0xf1, data[1],data[2],data[3] ]);
+                    window.notif_characteristics.writeValue(dataBytes);
+                   
+
+
+                }
       }
 
             async function connectBTNew3() {
@@ -126,7 +134,8 @@
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
               var dataBytes = Uint8Array.of([0xe6, 0x01]);
               notif_characteristics.writeValue(dataBytes);
-              
+              window.notif_characteristics = notif_characteristics;
+
             } catch(error) {
               log('Error: ' + error);
             }

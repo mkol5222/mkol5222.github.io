@@ -1,0 +1,212 @@
+01
+02
+3a
+
+e7
+58
+00
+07
+0e
+
+vaha.html:76 DataView(13) {}
+vaha.html:78 e7590301010000000000000065
+
+e7 59 
+03 celkem 3 casti
+ 01 tato je prvni
+  01 00000000000000 66
+
+
+resp
+E6-00 ACK
+          if ((data[0] & 0xFF) == 0xe6 && (data[1] & 0xFF) == 0x00) {
+            Log.d(TAG, "ACK Scale is ready");
+            return;
+        }
+
+E7-F0-33 ACK userinfo
+        if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0xf0 && data[2] == 0x33) {
+            Log.d(TAG, "ACK Got general user information");
+
+            int count = (byte) (data[4] & 0xFF);
+            int maxUsers = (byte) (data[5] & 0xFF);
+            Log.d(TAG, "Count:" + count + " maxUsers:" + maxUsers);
+
+E7-FF-34 ACK user UIDS
+        if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x34) {
+            Log.d(TAG, "Ack Get UUIDSs List of Users");
+
+            byte currentUserMax = (byte) (data[2] & 0xFF);
+            byte currentUserID = (byte) (data[3] & 0xFF);
+            byte userUuid = (byte) (data[11] & 0xFF);
+            String name = new String(data, 12, 3);
+            int year = (byte) (data[15] & 0xFF);
+E7-F0-46 - user info initials ACK
+    if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0xF0 && (data[2] & 0xFF) == 0x36) {
+            Log.d(TAG, "Ack Get User Info Initials");
+            String name = new String(data, 4, 3);
+            byte year = (byte) (data[7] & 0xFF);
+            byte month = (byte) (data[8] & 0xFF);
+            byte day = (byte) (data[9] & 0xFF);
+
+            int height = (data[10] & 0xFF);
+            boolean male = (data[11] & 0xF0) != 0;
+            byte activity = (byte) (data[11] & 0x0F);
+
+E7-F0-4F - ack scale status
+       if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0xf0 && (data[2] & 0xFF) == 0x4F) {
+            Log.d(TAG, "Ack Get scale status");
+
+            int unknown = data[3];
+            int batteryLevel = (data[4] & 0xFF);
+            float weightThreshold = (data[5] & 0xFF) / 10f;
+            float bodyFatThreshold = (data[6] & 0xFF) / 10f;
+            int unit = data[7]; // 1 kg, 2 lb (pounds), 3 st stone
+            boolean userExists = (data[8] == 0);
+            boolean userReferWeightExists = (data[9] == 0);
+            boolean userMeasurementExist = (data[10] == 0);
+            int scaleVersion = data[11];
+
+E7-F0-31 - ack user creation
+        if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0xf0 && data[2] == 0x31) {
+            Log.d(TAG, "Acknowledge creation of user");
+
+E7-F0-41-n will receive N meas.
+        if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0xf0 && (data[2] & 0xFF) == 0x41) {
+            Log.d(TAG, "Will start to receive measurements User Specific");
+
+            byte nr_measurements = data[3];
+
+E7-42-max_items-current_item
+       if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x42) {
+            Log.d(TAG, "Specific measurement User specific");
+
+            // Measurements are split into two parts
+
+            int max_items = data[2] & 0xFF;
+            int current_item = data[3] & 0xFF;
+
+E7-58-<d2>-nn-nn measurement 
+        if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x58) {
+            Log.d(TAG, "Active measurement");
+            if ((data[2] & 0xFF) != 0x00) {
+                // little endian
+                float weight = ((float) (
+                        ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)
+                )) * 50.0f / 1000.0f; // unit is 50g
+
+                // temporary value;
+                sendMessage(R.string.info_measuring, weight);
+                return;
+            }
+
+            // stabilized value
+            // little endian
+            float weight = ((float) (
+                    ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)
+            )) * 50.0f / 1000.0f; // unit is 50g
+
+            Log.i(TAG, "Got weight: " + weight);
+
+E7-59-(d2-)(d3) stable measurement results
+        if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
+            // Get stable measurement results
+            Log.d(TAG, "Get measurement data " + ((int) data[3]));
+
+            int max_items = (data[2] & 0xFF);
+            int current_item = (data[3] & 0xFF);
+
+
+req
+E7-34-currentUserMax,currentUserID ACK
+                Log.d(TAG, "Send ack gotUser");
+                writeBytes(new byte[]{
+                        (byte) 0xe7, (byte) 0xf1, (byte) 0x34, currentUserMax,
+                        currentUserID
+                });
+E7-4F-00-00-00-00-00-00-00-currentScaleUserId
+            // Get scale status for user
+            writeBytes(new byte[]{
+                    (byte) 0xe7, (byte) 0x4f, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                    (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) currentScaleUserId
+            });
+
+E7-40-00-00-00-00-00-00-00-max SeenUsers
+            writeBytes(new byte[]{
+                    (byte) 0xe7, 0x40, 0, 0, 0, 0, 0, 0, 0,
+                    (byte) (seenUsers.size() > 0 ? Collections.max(seenUsers) + 1 : 101)
+            });
+
+E7-F1-42-max_items-current_item ACK
+          // Send acknowledgement
+            writeBytes(new byte[]{
+                    (byte) 0xe7, (byte) 0xf1, (byte) 0x42, (byte) (data[2] & 0xFF),
+                    (byte) (data[3] & 0xFF)
+            });
+
+E7-F1-<d1>-<d2>-<d3>
+            writeBytes(new byte[]{
+                    (byte) 0xe7, (byte) 0xf1, (byte) (data[1] & 0xFF),
+                    (byte) (data[2] & 0xFF), (byte) (data[3] & 0xFF),
+            }
+
+E7-F1-<d1>-<d2>-<d3>
+            // Send ack that we got the data
+            writeBytes(new byte[]{
+                    (byte) 0xe7, (byte) 0xf1,
+                    (byte) (data[1] & 0xFF), (byte) (data[2] & 0xFF),
+                    (byte) (data[3] & 0xFF),
+            });
+
+
+E7-43- Delete scale data
+    private void deleteScaleData() {
+        writeBytes(new byte[]{
+                (byte) 0xe7, (byte) 0x43, (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                (byte) currentScaleUserId
+
+E9-time 
+    private void updateDateTimeSanitas() {
+        // Update date/time of the scale
+        long unixTime = System.currentTimeMillis() / 1000L;
+        byte[] unixTimeBytes = ByteBuffer.allocate(Long.SIZE / 8).putLong(unixTime).array();
+        Log.d(TAG, "Write new Date/Time:" + unixTime + " " + byteInHex(unixTimeBytes));
+
+        writeBytes(new byte[]{(byte) 0xe9, unixTimeBytes[4], unixTimeBytes[5], unixTimeBytes[6], unixTimeBytes[7]});
+    }
+
+E6-01 hello
+
+E7-33 req user get info 
+
+E7-31- req create use 
+                    Log.d(TAG, "Create User:" + selectedUser.user_name);
+                    writeBytes(new byte[]{
+                            (byte) 0xe7, (byte) 0x31, (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                            (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                            (byte) (seenUsers.size() > 0 ? Collections.max(seenUsers) + 1 : 101),
+                            nick[0], nick[1], nick[2],
+                            (byte) selectedUser.birthday.getYear(),
+                            (byte) selectedUser.birthday.getMonth(),
+                            (byte) selectedUser.birthday.getDate(),
+                            (byte) selectedUser.body_height,
+                            (byte) (((1 - selectedUser.gender) << 7) | activity)
+                    });
+
+
+E7-36 req uid 
+                    Log.d(TAG, "Request getUserInfo " + currentScaleUserId);
+                    writeBytes(new byte[]{
+                            (byte) 0xe7, (byte) 0x36, (byte) 0x0, (byte) 0x0, (byte) 0x0,
+                            (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) 0x0, (byte) currentScaleUserId
+
+E7-41
+               Log.d(TAG, "Request Saved User Measurements");
+                writeBytes(new byte[]{
+                        (byte) 0xe7, (byte) 0x41, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (byte) currentScaleUserId
+                });
+
+EA-02 force disc.
+         // Force disconnect
+                writeBytes(new byte[]{(byte) 0xea, (byte) 0x02});
