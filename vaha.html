@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 104</pre>
+  <pre id="log">Ver: 105</pre>
 
 </p>
 
@@ -90,7 +90,7 @@
                     console.log("ack: ", dataBytes);
                     //console.log(window.notif_characteristics);
                     window.notif_characteristics.writeValue(dataBytes).then(_ => {
-                        console.log('written.');
+                        console.log('written.', buf2hex(dataBytes));
                     })
                     .catch(error => { console.log(error); });
                 }
@@ -100,7 +100,7 @@
                     console.log(dataBytes);
                     //console.log(window.notif_characteristics);
                     window.notif_characteristics.writeValue(dataBytes).then(_ => {
-                        console.log('written.');
+                        console.log('written.', buf2hex(dataBytes));
                     })
                     .catch(error => { console.log(error); });
                    
@@ -146,7 +146,7 @@
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
               var dataBytes = new Uint8Array([0xe6, 0x01]).buffer;
               notif_characteristics.writeValue(dataBytes).then(_ => {
-                        console.log('written.');
+                        console.log('written.', buf2hex(dataBytes));
                     })
                     .catch(error => { console.log(error); });
               window.notif_characteristics = notif_characteristics;
