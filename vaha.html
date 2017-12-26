@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 106</pre>
+  <pre id="log">Ver: 107</pre>
 
 </p>
 
@@ -98,7 +98,8 @@
                 }
                 if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
                     console.log("velke mereni. potvrzujeme ", data[3], " of ", data[2]);
-                    var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]).buffer;
+                    //var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]).buffer;
+                    var dataBytes = new Uint8Array([0xe7, 0xf1, 0x59 , 3, 1 ]).buffer;
                     console.log(dataBytes, buf2hex(dataBytes) );
                     //console.log(window.notif_characteristics);
                     window.notif_characteristics.writeValue(dataBytes).then(_ => {
