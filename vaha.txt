@@ -17,6 +17,10 @@ e7 59
   01 00000000000000 66
 
 
+e7 59 03 01   01 00 00 00 00 00 00 00 65
+
+
+
 resp
 E6-00 ACK
           if ((data[0] & 0xFF) == 0xe6 && (data[1] & 0xFF) == 0x00) {
@@ -86,7 +90,7 @@ E7-42-max_items-current_item
             int max_items = data[2] & 0xFF;
             int current_item = data[3] & 0xFF;
 
-E7-58-<d2>-nn-nn measurement 
+E7-58-<d2>-nn-nn measurement  (povrzovani E7-F1-)
         if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x58) {
             Log.d(TAG, "Active measurement");
             if ((data[2] & 0xFF) != 0x00) {
@@ -108,7 +112,7 @@ E7-58-<d2>-nn-nn measurement
 
             Log.i(TAG, "Got weight: " + weight);
 
-E7-59-(d2-)(d3) stable measurement results
+E7-59-(d2-)(d3) stable measurement results (povrzovani E7-F1-)
         if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
             // Get stable measurement results
             Log.d(TAG, "Get measurement data " + ((int) data[3]));
