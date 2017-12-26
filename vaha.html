@@ -76,6 +76,17 @@
                 console.log(value);
                 const buffer = value.buffer;
                 console.log(buf2hex(buffer));
+                data=value;
+                if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x58) {
+                    console.log("mereni:");
+                    if ((data[2] & 0xFF) != 0x00) {
+                        // little endian
+                        float weight = ( (
+                        ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)
+                        )) * 50.0f / 1000.0f; // unit is 50g
+                    }
+                    console.log(weight);
+                }
       }
 
             async function connectBTNew3() {
