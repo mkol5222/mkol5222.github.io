@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 95</pre>
+  <pre id="log">Ver: 96</pre>
 
 </p>
 
@@ -83,6 +83,7 @@
                     //if ((data[2] & 0xFF) != 0x00) {
                         // little endian
                         weight = ( ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)) * 50.0 / 1000.0; // unit is 50g
+                        document.getElementById("display").innerHTML = weight;
                     //}
                     console.log(weight);
                 }
