@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 101</pre>
+  <pre id="log">Ver: 102</pre>
 
 </p>
 
@@ -86,6 +86,13 @@
                         document.getElementById("display").innerHTML = weight;
                     //}
                     console.log(weight);
+                    var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]);
+                    console.log(dataBytes);
+                    console.log(window.notif_characteristics);
+                    window.notif_characteristics.writeValue(dataBytes).then(_ => {
+                        console.log('written.');
+                    })
+                    .catch(error => { console.log(error); });
                 }
                 if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
                     console.log("velke mereni. potvrzeno");
