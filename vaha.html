@@ -33,6 +33,9 @@
 </script> 
     
     <script>
+
+          // SANITAS SBF70
+
           //log = console.log;
           function log(a) {
             document.getElementById("log").innerHTML += "\n"+a;
@@ -56,6 +59,15 @@
             }
           }
 
+
+          function handleNotif(event) {
+                let value = event.target.value;
+                var decoder = new TextDecoder("utf-8");
+                var decodedString = decoder.decode(value);
+                //console.log("Read value: " + decodedString);
+                document.getElementById("display").innerHTML = decodedString;
+      }
+
             async function connectBTNew3() {
               try {
                 log("Requesting caliper device");
@@ -68,6 +80,28 @@
                 window.device3 = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
                 log("Got device 3" + window.device3.name);
                 console.log(window.device3);
+
+
+              log('Connecting to GATT Server...');
+              const server = await window.device3.gatt.connect();
+
+              log('Getting VAHA Service...');
+              //cina
+              // 0783B03E-8535-B5A0-7140-A304D2495CB7
+              const service = await server.getPrimaryService("0000FFE0-0000-1000-8000-00805F9B34FB".toLowerCase());
+              // SY295
+              //const service = await server.getPrimaryService('c1b25000-caaf-6d0e-4c33-7dae30052840');
+              log("Got service");
+              console.log(service);
+
+              //const notif_characteristics = await service.getCharacteristic("c1b25013-caaf-6d0e-4c33-7dae30052840");
+              const notif_characteristics = await service.getCharacteristic("0000FFE1-0000-1000-8000-00805F9B34FB".toLowerCase());
+              log("Notification chararacteristics " + JSON.stringify( notif_characteristics ) );
+
+              await notif_characteristics.startNotifications();
+              log("Notifications started")
+              notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
+
               
             } catch(error) {
               log('Error: ' + error);
