@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 90</pre>
+  <pre id="log">Ver: 91</pre>
 
 </p>
 
@@ -76,7 +76,7 @@
                 console.log(value);
                 const buffer = value.buffer;
                 console.log(buf2hex(buffer));
-                data=value.buffer;
+                data=Uint8Array(value.buffer);
                 window.datares = data;
                 if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x58) {
                     console.log("mereni:");
