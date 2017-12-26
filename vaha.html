@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 102</pre>
+  <pre id="log">Ver: 103</pre>
 
 </p>
 
@@ -86,7 +86,7 @@
                         document.getElementById("display").innerHTML = weight;
                     //}
                     console.log(weight);
-                    var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]);
+                    var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]).buffer;
                     console.log(dataBytes);
                     console.log(window.notif_characteristics);
                     window.notif_characteristics.writeValue(dataBytes).then(_ => {
@@ -96,7 +96,7 @@
                 }
                 if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
                     console.log("velke mereni. potvrzeno");
-                    var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]);
+                    var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]).buffer;
                     console.log(dataBytes);
                     console.log(window.notif_characteristics);
                     window.notif_characteristics.writeValue(dataBytes).then(_ => {
@@ -144,7 +144,7 @@
 
               log("writing")
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
-              var dataBytes = new Uint8Array([0xe6, 0x01]);
+              var dataBytes = new Uint8Array([0xe6, 0x01]).buffer;
               notif_characteristics.writeValue(dataBytes).then(_ => {
                         console.log('written.');
                     })
