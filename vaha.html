@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 84</pre>
+  <pre id="log">Ver: 85</pre>
 
 </p>
 
@@ -66,6 +66,7 @@
                 var decodedString = decoder.decode(value);
                 //console.log("Read value: " + decodedString);
                 document.getElementById("display").innerHTML = decodedString;
+                console.log(value);
       }
 
             async function connectBTNew3() {
