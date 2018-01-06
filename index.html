@@ -10,7 +10,7 @@
     <h1>Sylvac S_Cal EVO caliper IP67</h1>
     <h2><p id="display"></p></h2>
 
-<button onclick="connectBTNew3()">Connect BT</button>
+<button onclick="connectBTNew()">Connect SY</button>
 <button onclick="connectBTNew2()">Connect BT2</button>
 <button onclick="addNewRow();">Add row</button>
 <p>
@@ -82,8 +82,8 @@
             
               //const options = {filters: [{ name: 'SY295'}], optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']};
               //const device = await navigator.bluetooth.requestDevice(options);
-              //const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']} );
-              const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
+              const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']} );
+              //const device = await navigator.bluetooth.requestDevice( {acceptAllDevices: true,  optionalServices: ['0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase()]} );
               log("Got device " + device.name);
               console.log(device);
 
@@ -93,14 +93,14 @@
               log('Getting caliper Service...');
               //cina
               // 0783B03E-8535-B5A0-7140-A304D2495CB7
-              const service = await server.getPrimaryService('0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase());
+              //const service = await server.getPrimaryService('0783B03E-8535-B5A0-7140-A304D2495CB7'.toLowerCase());
               // SY295
-              //const service = await server.getPrimaryService('c1b25000-caaf-6d0e-4c33-7dae30052840');
+              const service = await server.getPrimaryService('c1b25000-caaf-6d0e-4c33-7dae30052840');
               log("Got service");
               console.log(service);
 
-              //const notif_characteristics = await service.getCharacteristic("c1b25013-caaf-6d0e-4c33-7dae30052840");
-              const notif_characteristics = await service.getCharacteristic("0783B03E-8535-B5A0-7140-A304D2495CB8".toLowerCase());
+              const notif_characteristics = await service.getCharacteristic("c1b25013-caaf-6d0e-4c33-7dae30052840");
+              //const notif_characteristics = await service.getCharacteristic("0783B03E-8535-B5A0-7140-A304D2495CB8".toLowerCase());
               log("Notification chararacteristics " + JSON.stringify( notif_characteristics ) );
 
               await notif_characteristics.startNotifications();
