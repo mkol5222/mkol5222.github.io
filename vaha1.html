@@ -1,0 +1,150 @@
+<html>
+    <head>
+        <title>Vaha</title>
+    </head>
+    <body>
+        <button onclick="start()">Connect</button>
+        <pre>
+            <div id="log"></div>
+        </pre>
+        <script>
+            const VAHA_SERVICE = '0000FFE0-0000-1000-8000-00805F9B34FB'.toLowerCase();
+            const VAHA_CHAR = "0000FFE1-0000-1000-8000-00805F9B34FB".toLowerCase();
+
+            function buf2hex(buffer) { // buffer is an ArrayBuffer
+                return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join(' ');
+            }
+
+            function writeBytes(ba) {
+                
+                let b = ba.buffer;
+                console.log(b);
+                console.log(buf2hex(b));
+
+                // window.vahaChar
+                window.vahaChar.writeValue(b).then(_ => {
+                        console.log('written to BT: ', buf2hex(b));
+                    });
+                console.log(window.vahaChar);
+            }
+
+            function vahaNotificationReceived(e)
+            {
+                console.log(e);
+
+                let value = event.target.value;
+                const buffer = value.buffer;
+                console.log(buf2hex(buffer));
+
+                const data=new Uint8Array(value.buffer);
+
+                if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x58) {
+                    console.log("mereni:");
+                    //if ((data[2] & 0xFF) != 0x00) {
+                        // little endian
+                        weight = ( ((data[3] & 0xFF) << 8) + (data[4] & 0xFF)) * 50.0 / 1000.0; // unit is 50g
+                        if ((data[2] & 0xFF) != 0x00) {
+                            writeLog(weight); 
+                        } else {
+                            writeLog(">>> "+weight+" <<<"); 
+                        }
+                    //}
+                        console.log(weight);
+/*                     if (data[2] === 0) {
+                        var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]).buffer;
+                        console.log("ack: ", dataBytes);
+                        //console.log(window.notif_characteristics);
+                        window.notif_characteristics.writeValue(dataBytes).then(_ => {
+                            console.log('written 58 ack.', buf2hex(dataBytes));
+                        })
+                        .catch(error => { console.log(error); });
+                    }
+ */             }
+
+                if ((data[0] & 0xFF) == 0xe7 && (data[1] & 0xFF) == 0x59) {
+                    console.log("velke mereni. potvrzujeme ", data[3], " of ", data[2]);
+                    let a = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]);
+                    writeBytes(a);
+                    console.log(a);
+                    let b = a.buffer;
+                    console.log(b);
+                    console.log(buf2hex(b));
+
+                    //var dataBytes = new Uint8Array([0xe7, 0xf1, data[1],data[2],data[3] ]).buffer;
+/*                     var dataBytes = new Uint8Array([0xe7, 0xf1, 0x59 , 3, 1 ]).buffer;
+                    console.log(dataBytes, buf2hex(dataBytes) );
+                    //console.log(window.notif_characteristics);
+                    window.notif_characteristics.writeValue(dataBytes).then(_ => {
+                        console.log('written 59 ack.', buf2hex(dataBytes));
+                    })
+                    .catch(error => { console.log(error); });
+ */                   
+
+           /* // Send ack that we got the data
+           writeBytes(new byte[]{
+                    (byte) 0xe7, (byte) 0xf1,
+                    (byte) (data[1] & 0xFF), (byte) (data[2] & 0xFF),
+                    (byte) (data[3] & 0xFF),
+            }); */
+                }
+            }
+
+            async function connectVaha() {
+              try {
+                // vaha
+                writeLog("Hleda se vaha");
+                window.vaha = await navigator.bluetooth.requestDevice( { filters: [{ services: [VAHA_SERVICE] }] } );
+                writeLog("Got device " + window.vaha);
+                console.log(window.vaha);
+
+                // service
+                writeLog('Connecting to GATT Server...');
+                const server = await window.vaha.gatt.connect();
+                writeLog('Getting VAHA Service...');
+                const service = await server.getPrimaryService(VAHA_SERVICE);
+                writeLog("Got service");
+                console.log(service);
+
+                // notif_characteristics
+                const notif_characteristics = await service.getCharacteristic(VAHA_CHAR);
+                writeLog("Notification chararacteristics " + JSON.stringify( notif_characteristics ) );
+                await notif_characteristics.startNotifications();
+                notif_characteristics.addEventListener('characteristicvaluechanged', vahaNotificationReceived);
+                writeLog("Notifications started");
+                window.vahaChar = notif_characteristics;
+
+/*                     log("writing")
+                    notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif3);
+                    var dataBytes = new Uint8Array([0xe6, 0x01]).buffer;
+                    notif_characteristics.writeValue(dataBytes).then(_ => {
+                                console.log('written.', buf2hex(dataBytes));
+                            })
+                            .catch(error => { console.log(error); });
+                    window.notif_characteristics = notif_characteristics;
+ */
+                } catch(error) {
+                    writeLog('Error: ' + error);
+                }
+
+/*             var dataBytes = new Uint8Array([0xe7, 0x33]).buffer;
+              notif_characteristics.writeValue(dataBytes).then(_ => {
+                        console.log('written user info req.', buf2hex(dataBytes));
+                    })
+                    .catch(error => { console.log(error); });
+            ///E7-33
+ */            }
+
+            function start() {
+                writeLog("clicked");
+                connectVaha();
+            }
+            function writeLog(str) {
+                let logElement = document.getElementById("log");
+                let text = logElement.innerHTML;
+                logElement.innerHTML = text + "\n" + str;
+            }
+            writeLog("vaha");
+            writeLog("ready")
+        </script>
+    </body>
+</html>
