@@ -21,7 +21,7 @@
   </table>
 
   <hr>
-  <pre id="log">Ver: 81</pre>
+  <pre id="log">Ver: 108</pre>
 
 </p>
 
@@ -107,13 +107,13 @@
               log("Notifications started")
               notif_characteristics.addEventListener('characteristicvaluechanged', handleNotif);
 
-              //const indic_characteristics = await service.getCharacteristic("c1b25010-caaf-6d0e-4c33-7dae30052840");
+              const indic_characteristics = await service.getCharacteristic("c1b25010-caaf-6d0e-4c33-7dae30052840");
               //const indic_characteristics = await service.getCharacteristic("0783B03E-8535-B5A0-7140-A304D2495CB9".toLowerCase());
-              //log("Indication characteristics"+  JSON.stringify(indic_characteristics)); 
+              log("Indication characteristics"+  JSON.stringify(indic_characteristics)); 
 
-              //await indic_characteristics.startNotifications();
-              //log("Indication characteristics notifications started")
-              //indic_characteristics.addEventListener('characteristicvaluechanged', handleInd);
+              await indic_characteristics.startNotifications();
+              log("Indication characteristics notifications started")
+              indic_characteristics.addEventListener('characteristicvaluechanged', handleInd);
 
               //const characteristic = await service.getCharacteristic("c1b25012-caaf-6d0e-4c33-7dae30052840");
               //const characteristic = await service.getCharacteristic("0783B03E-8535-B5A0-7140-A304D2495CBA".toLowerCase());
