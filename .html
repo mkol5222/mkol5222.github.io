@@ -1,0 +1,115 @@
+<html>
+
+
+<head>
+
+</head>
+
+
+<body>
+    <button onclick="connectBT()">Connect</button>
+    <hr>
+    <form id="form">
+        Command: <input id="text" type="text" name="command"><br>
+        <input type="submit" value="OK"><br>
+    </form>
+
+    <pre id="log">Welcome to SYterm</pre>
+    <script>
+        function log(a) {
+            document.getElementById("log").innerHTML += "\n" + a;
+        }
+
+        document.getElementById("form").addEventListener("submit", sendCommand, false);
+
+        function sendCommand(e) {
+            console.log(e);
+            e.preventDefault();
+
+            const textField = document.getElementById("text")
+            console.log(textField)
+            log(textField.value);
+            writeCommand(textField.value)
+            textField.value = "";
+            textField.focus();
+        }
+
+        const decoder = new TextDecoder("utf-8");
+
+        function handleInd(event) {
+            let value = event.target.value;
+            var decodedString = decoder.decode(value);
+            log(">>> " + decodedString)
+        }
+
+        const enc = new TextEncoder("utf-8");
+
+        function writeCommand(cmd) {
+            window.cmd_characteristic.writeValue(enc.encode(cmd + "\r"));
+        }
+
+        async function connectBT() {
+
+            log("Requesting instrument");
+            try {
+                const device = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true,
+                    optionalServices: ['c1b25000-caaf-6d0e-4c33-7dae30052840']
+                });
+
+                log("Got device " + device.name);
+                console.log(device);
+
+                log('Connecting to GATT Server...');
+                try {
+                    const server = await device.gatt.connect();
+                    log("Connected.");
+
+                    log('Getting SY service...');
+                    try {
+                        const service = await server.getPrimaryService('c1b25000-caaf-6d0e-4c33-7dae30052840');
+                        log("Got service.");
+                        console.log(service);
+
+                        const indic_characteristics = await
+                        service.getCharacteristic("c1b25010-caaf-6d0e-4c33-7dae30052840");
+                        log("Indication characteristics" + JSON.stringify(indic_characteristics));
+                        indic_characteristics.addEventListener('characteristicvaluechanged', handleInd);
+                        await indic_characteristics.startNotifications();
+                        log("Indication characteristics notifications started")
+
+                        const notif_characteristics = await
+                        service.getCharacteristic("c1b25013-caaf-6d0e-4c33-7dae30052840");
+                        log("Notification chararacteristics " + JSON.stringify(notif_characteristics));
+                        notif_characteristics.addEventListener('characteristicvaluechanged', handleInd);
+                        await notif_characteristics.startNotifications();
+                        log("Notifications started")
+
+                        window.cmd_characteristic = await service.getCharacteristic(
+                            "c1b25012-caaf-6d0e-4c33-7dae30052840");
+
+
+
+                    } catch (err) {
+                        log("Failed to get SY service");
+                        console.log(err);
+                    }
+
+                } catch (err) {
+                    log("Failed to connect");
+                    console.log(err);
+                }
+
+
+            } catch (err) {
+                log("Failed to get instrument");
+                console.log(err);
+            }
+
+
+
+        }
+    </script>
+</body>
+
+</html>
